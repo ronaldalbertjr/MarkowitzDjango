@@ -5,6 +5,9 @@ def button(request):
     return render(request, 'home.html')
 
 def output(request):
+    if request.method == "POST":
+        ativos = request.POST['ativos']
+
     import pandas as pd
     import numpy as np
     import pandas_datareader.data as web
@@ -13,7 +16,8 @@ def output(request):
 
     start = datetime(2018, 1, 1)
     end = datetime(2018, 12, 31)
-    acoes = ['PETR4.SA', 'ENBR3.SA', 'BBSE3.SA', 'VIVT4.SA', 'ITSA4.SA', 'ABCB4.SA', 'TAEE11.SA']
+    #acoes = ['PETR4.SA', 'ENBR3.SA', 'BBSE3.SA', 'VIVT4.SA', 'ITSA4.SA', 'ABCB4.SA', 'TAEE11.SA']
+    acoes = ativos.split("|")
     dados = web.get_data_yahoo(acoes, start, end)['Adj Close']
 
 
